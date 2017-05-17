@@ -34,6 +34,45 @@
 @end
 
 @implementation NSDate (JKReporting)
++(NSCalendar*)jk_gregorianCalendar_factory{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSCalendar *gregorianCalendar;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+#pragma clang diagnostic pop
+    }
+#else
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+#endif
+    
+    return gregorianCalendar;
+}
++(NSDateComponents*)jk_YMDComponentsFactor:(NSDate*)date withGregorianCalendar:(NSCalendar*)gregorianCalendar{
+    
+    //    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
+    
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSDateComponents *components;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        components = [gregorianCalendar components: NSCalendarUnitMonth | NSCalendarUnitDay |NSCalendarUnitYear fromDate:date];
+        return components;
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+        return components;
+#pragma clang diagnostic pop
+    }
+#else
+    NSDateComponents *components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+    return components;
+#endif
+}
+
 
 + (NSDate *)jk_dateWithYear:(int)year month:(int)month day:(int)day {
     NSDateComponents *components = [[NSDateComponents alloc] init];
@@ -47,16 +86,16 @@
     [self jk_zeroOutTimeComponents:&components];
     
     // Generate a valid NSDate and return it.
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     return [gregorianCalendar dateFromComponents:components];
 }
 
+
 + (NSDate *)jk_midnightOfDate:(NSDate *)date {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
+
     // Start out by getting just the year, month and day components of the specified date.
-    NSDateComponents *components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                        fromDate:date];
+    NSDateComponents *components = [self jk_YMDComponentsFactor:date withGregorianCalendar:gregorianCalendar];
     // Zero out the hour, minute and second components.
     [self jk_zeroOutTimeComponents:&components];
     
@@ -77,19 +116,18 @@
     NSDateComponents *oneDayComponent = [[NSDateComponents alloc] init];
     [oneDayComponent setDay:1];
     
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     return [gregorianCalendar dateByAddingComponents:oneDayComponent
                                               toDate:date
                                              options:0];
 }
 
 + (NSDate *)jk_firstDayOfCurrentMonth {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     
     // Start out by getting just the year, month and day components of the current date.
     NSDate *currentDate = [NSDate date];
-    NSDateComponents *components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                        fromDate:currentDate];
+    NSDateComponents *components = [self jk_YMDComponentsFactor:currentDate withGregorianCalendar:gregorianCalendar];
     
     // Change the Day component to 1 (for the first day of the month), and zero out the time components.
     [components setDay:1];
@@ -104,15 +142,14 @@
     [minusOneMonthComponent setMonth:-1];
     
     // Subtract 1 month from today's date. This gives us "one month ago today".
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     NSDate *currentDate = [NSDate date];
     NSDate *oneMonthAgoToday = [gregorianCalendar dateByAddingComponents:minusOneMonthComponent
                                                                   toDate:currentDate
                                                                  options:0];
     
     // Now extract the year, month and day components of oneMonthAgoToday.
-    NSDateComponents *components = [gregorianCalendar components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit
-                                                        fromDate:oneMonthAgoToday];
+    NSDateComponents *components =[self jk_YMDComponentsFactor:oneMonthAgoToday withGregorianCalendar:gregorianCalendar];
     
     // Change the day to 1 (since we want the first day of the previous month).
     [components setDay:1];
@@ -132,7 +169,7 @@
     [plusOneMonthComponent setMonth:1];
     
     // Add 1 month to firstDayOfCurrentMonth.
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     return [gregorianCalendar dateByAddingComponents:plusOneMonthComponent
                                               toDate:firstDayOfCurrentMonth
                                              options:0];
@@ -150,7 +187,7 @@
     [minusOneDayComponent setDay:-1];
     
     // Subtract 1 day from firstDayOfCurrentQuarter.
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     NSDate *lastDayOfPreviousQuarter = [gregorianCalendar dateByAddingComponents:minusOneDayComponent
                                                                           toDate:firstDayOfCurrentQuarter
                                                                          options:0];
@@ -165,19 +202,18 @@
     [plusThreeMonthsComponent setMonth:3];
     
     // Add 3 months to firstDayOfCurrentQuarter.
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     return [gregorianCalendar dateByAddingComponents:plusThreeMonthsComponent
                                               toDate:firstDayOfCurrentQuarter
                                              options:0];
 }
 
 + (NSDate *)jk_firstDayOfCurrentYear {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     
     // Start out by getting just the year, month and day components of the current date.
     NSDate *currentDate = [NSDate date];
-    NSDateComponents *components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                        fromDate:currentDate];
+    NSDateComponents *components =[self jk_YMDComponentsFactor:currentDate withGregorianCalendar:gregorianCalendar];
     
     // Change the Day and Month components to 1 (for the first day of the year), and zero out the time components.
     [components setDay:1];
@@ -188,10 +224,9 @@
 }
 
 + (NSDate *)jk_firstDayOfPreviousYear {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     NSDate *currentDate = [NSDate date];
-    NSDateComponents *components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-                                                        fromDate:currentDate];
+    NSDateComponents *components = [self jk_YMDComponentsFactor:currentDate withGregorianCalendar:gregorianCalendar];
     [components setDay:1];
     [components setMonth:1];
     [components setYear:components.year - 1];
@@ -209,7 +244,7 @@
     [plusOneYearComponent setYear:1];
     
     // Add 1 year to firstDayOfCurrentYear.
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
     return [gregorianCalendar dateByAddingComponents:plusOneYearComponent
                                               toDate:firstDayOfCurrentYear
                                              options:0];
@@ -233,9 +268,8 @@
 }
 
 + (NSDate *)jk_firstDayOfQuarterFromDate:(NSDate *)date {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorianCalendar components:NSMonthCalendarUnit | NSYearCalendarUnit
-                                                        fromDate:date];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
+    NSDateComponents *components = [self jk_YMDComponentsFactor:date withGregorianCalendar:gregorianCalendar];
     
     NSInteger quarterNumber = floor((components.month - 1) / 3) + 1;
     // NSLog(@"Quarter number: %d", quarterNumber);
@@ -252,17 +286,17 @@
 
 
 - (NSDate*) jk_dateFloor {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* dateComponents = [gregorianCalendar components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self];
+    NSDateComponents* dateComponents = [[self class]jk_YMDComponentsFactor:self withGregorianCalendar:gregorianCalendar];
     
     return [gregorianCalendar dateFromComponents:dateComponents];
 }
 
 - (NSDate*) jk_dateCeil {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* dateComponents = [gregorianCalendar components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self];
+    NSDateComponents* dateComponents = [[self class] jk_YMDComponentsFactor:self withGregorianCalendar:gregorianCalendar];
     
     [dateComponents setHour:23];
     [dateComponents setMinute:59];
@@ -272,9 +306,21 @@
 }
 
 - (NSDate*) jk_startOfWeek {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSDateComponents *components;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        components = [gregorianCalendar components: NSCalendarUnitWeekday | NSCalendarUnitYear |NSCalendarUnitMonth |NSCalendarUnitDay  fromDate:self];
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        components = [gregorianCalendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+#pragma clang diagnostic pop
+    }
+#else
+    NSDateComponents *components = [gregorianCalendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+#endif
     
     [components setDay:([components day] - ([components weekday] - 1))];
     
@@ -282,9 +328,21 @@
 }
 
 - (NSDate*) jk_endOfWeek {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSDateComponents *components;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        components = [gregorianCalendar components: NSCalendarUnitWeekday | NSCalendarUnitYear |NSCalendarUnitMonth |NSCalendarUnitDay  fromDate:self];
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        components = [gregorianCalendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+#pragma clang diagnostic pop
+    }
+#else
+    NSDateComponents *components = [gregorianCalendar components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+#endif
     
     [components setDay:([components day] + (7 - [components weekday]))];
     [components setHour:23];
@@ -295,19 +353,48 @@
 }
 
 - (NSDate*) jk_startOfMonth {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSDateComponents *components;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        components = [gregorianCalendar components:NSCalendarUnitYear |NSCalendarUnitMonth  fromDate:self];
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+#pragma clang diagnostic pop
+    }
+#else
+    NSDateComponents *components = [gregorianCalendar components: NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+#endif
     
     return [gregorianCalendar dateFromComponents:components];
 }
 
 - (NSDate*) jk_endOfMonth {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSDateComponents *components;
+    NSRange dayRange;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        components = [gregorianCalendar components:NSCalendarUnitYear |NSCalendarUnitMonth  fromDate:self];
+        dayRange = [gregorianCalendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:self];
+
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+        dayRange = [gregorianCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self];
+#pragma clang diagnostic pop
+    }
+#else
+    NSDateComponents *components = [gregorianCalendar components: NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self];
+    NSRange dayRange = [gregorianCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
+#endif
     
-    NSRange dayRange = [gregorianCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self];
+  
     
     [components setDay:dayRange.length];
     [components setHour:23];
@@ -318,18 +405,41 @@
 }
 
 - (NSDate*) jk_startOfYear {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSYearCalendarUnit fromDate:self];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSDateComponents *components;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        components = [gregorianCalendar components:NSCalendarUnitYear fromDate:self];
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        components = [gregorianCalendar components:NSYearCalendarUnit fromDate:self];
+#pragma clang diagnostic pop
+    }
+#else
+    NSDateComponents *components = [gregorianCalendar components: NSYearCalendarUnit fromDate:self];
+#endif
     
     return [gregorianCalendar dateFromComponents:components];
 }
 
 - (NSDate*) jk_endOfYear {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSYearCalendarUnit fromDate:self];
-    
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSDateComponents *components;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        components = [gregorianCalendar components:NSCalendarUnitYear fromDate:self];
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        components = [gregorianCalendar components:NSYearCalendarUnit fromDate:self];
+#pragma clang diagnostic pop
+    }
+#else
+    NSDateComponents *components = [gregorianCalendar components: NSYearCalendarUnit fromDate:self];
+#endif
     [components setDay:31];
     [components setMonth:12];
     [components setHour:23];
@@ -360,9 +470,9 @@
 }
 
 - (NSDate*) jk_previousMonth:(NSUInteger) monthsToMove {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+    NSDateComponents* components =[[self class] jk_YMDComponentsFactor:self withGregorianCalendar:gregorianCalendar];
     
     NSInteger dayInMonth = [components day];
     
@@ -373,7 +483,20 @@
     
     // Determine the valid day range for that month
     NSDate* workingDate = [gregorianCalendar dateFromComponents:components];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSRange dayRange;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        dayRange = [gregorianCalendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:workingDate];
+        
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        dayRange = [gregorianCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
+#pragma clang diagnostic pop
+    }
+#else
     NSRange dayRange = [gregorianCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
+#endif
     
     // Set the day clamping to the maximum number of days in that month
     [components setDay:MIN(dayInMonth, dayRange.length)];
@@ -386,9 +509,9 @@
 }
 
 - (NSDate*) jk_nextMonth:(NSUInteger) monthsToMove {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [[self class] jk_gregorianCalendar_factory];
 
-    NSDateComponents* components = [gregorianCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self];
+    NSDateComponents* components = [[self class] jk_YMDComponentsFactor:self withGregorianCalendar:gregorianCalendar];
     
     NSInteger dayInMonth = [components day];
     
@@ -399,8 +522,20 @@
     
     // Determine the valid day range for that month
     NSDate* workingDate = [gregorianCalendar dateFromComponents:components];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    NSRange dayRange;
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f){
+        dayRange = [gregorianCalendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:workingDate];
+        
+    }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        dayRange = [gregorianCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
+#pragma clang diagnostic pop
+    }
+#else
     NSRange dayRange = [gregorianCalendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:workingDate];
-    
+#endif
     // Set the day clamping to the maximum number of days in that month
     [components setDay:MIN(dayInMonth, dayRange.length)];
     

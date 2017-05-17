@@ -374,6 +374,7 @@
 		BCB79A0C1AFDF23500C12525 /* UIAlertView+JKBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB79A0B1AFDF23500C12525 /* UIAlertView+JKBlock.m */; };
 		BCB9547D1B0D829800E6BA78 /* NSData+JKDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB9547C1B0D829800E6BA78 /* NSData+JKDataCache.m */; };
 		C7A8107F1BBA876B00865FFB /* NSObject+JKAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A8107D1BBA876B00865FFB /* NSObject+JKAppInfo.m */; };
+		EFC5D7CF1ECBEC5900725970 /* UIView+Sideline.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC5D7CE1ECBEC5900725970 /* UIView+Sideline.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1045,6 +1046,8 @@
 		BCB9547C1B0D829800E6BA78 /* NSData+JKDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JKDataCache.m"; sourceTree = "<group>"; };
 		C7A8107D1BBA876B00865FFB /* NSObject+JKAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JKAppInfo.m"; sourceTree = "<group>"; };
 		C7A8107E1BBA876B00865FFB /* NSObject+JKAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JKAppInfo.h"; sourceTree = "<group>"; };
+		EFC5D7CD1ECBEC5900725970 /* UIView+Sideline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Sideline.h"; sourceTree = "<group>"; };
+		EFC5D7CE1ECBEC5900725970 /* UIView+Sideline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Sideline.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2451,6 +2454,8 @@
 				A2958D141B35961600D7AA0F /* UIView+JKDraggable.m */,
 				A232AC141B38EC9F00A149D3 /* UIView+JKRecursion.h */,
 				A232AC151B38EC9F00A149D3 /* UIView+JKRecursion.m */,
+				EFC5D7CD1ECBEC5900725970 /* UIView+Sideline.h */,
+				EFC5D7CE1ECBEC5900725970 /* UIView+Sideline.m */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -3174,6 +3179,7 @@
 				BCB79A021AFDE0B600C12525 /* NSObject+JKBlockTimer.m in Sources */,
 				A202D96E1B0F75B400EAB199 /* NSDictionary+JKBlock.m in Sources */,
 				A284C1151AEBBF8000D90ED5 /* UINavigationBar+JKAwesome.m in Sources */,
+				EFC5D7CF1ECBEC5900725970 /* UIView+Sideline.m in Sources */,
 				A28BE32E1A3E9FDC005C4AC6 /* UIImage+JKFXImage.m in Sources */,
 				A205E4C31C28E44C002A1E33 /* NSInvocationDemoViewController.m in Sources */,
 				A2958D3F1B35A41F00D7AA0F /* UIWebView+JKMetaParser.m in Sources */,

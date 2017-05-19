@@ -19,10 +19,10 @@ typedef NS_OPTIONS(NSUInteger, SideType) {
 @interface UIView (Sideline)
 
 // 为view某个方向的边描线
-- (void)setLine:(SideType)types;
+- (void)setLine:(SideType)types Color:(UIColor *)color;
 
 // 为view某个方向的边描虚线
-- (void)setDashLine:(SideType)types;
+- (void)setDashLine:(SideType)types Color:(UIColor *)color;
 
 
 @end

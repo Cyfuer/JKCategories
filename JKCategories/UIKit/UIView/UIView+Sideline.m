@@ -10,37 +10,37 @@
 
 @implementation UIView (Sideline)
 
-- (void)setLine:(SideType)types {
-    [self addLayerWithSides:types isDash:NO];
+- (void)setLine:(SideType)types Color:(UIColor *)color {
+    [self addLayerWithSides:types byColor:color isDash:NO];
 }
 
-- (void)setDashLine:(SideType)types {
-    [self addLayerWithSides:types isDash:YES];
+- (void)setDashLine:(SideType)types Color:(UIColor *)color {
+    [self addLayerWithSides:types byColor:color isDash:YES];
 }
 
-- (void)addLayerWithSides:(SideType)sides isDash:(BOOL)isDash {
+- (void)addLayerWithSides:(SideType)sides byColor:(UIColor *)color isDash:(BOOL)isDash {
     if (sides & UIViewSideTop) {
-        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideTop isDash:isDash];
+        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideTop byColor:color isDash:isDash];
         [self.layer addSublayer:layer];
     }
     
     if (sides & UIViewSideLeft) {
-        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideLeft isDash:isDash];
+        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideLeft byColor:color isDash:isDash];
         [self.layer addSublayer:layer];
     }
     
     if (sides & UIViewSideBottom) {
-        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideBottom isDash:isDash];
+        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideBottom byColor:color isDash:isDash];
         [self.layer addSublayer:layer];
     }
     
     if (sides & UIViewSideRight) {
-        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideRight isDash:isDash];
+        CAShapeLayer *layer = [self shapeLayerWithSide:UIViewSideRight byColor:color isDash:isDash];
         [self.layer addSublayer:layer];
     }
 }
 
-- (CAShapeLayer *)shapeLayerWithSide:(SideType)side isDash:(BOOL)isDash {
+- (CAShapeLayer *)shapeLayerWithSide:(SideType)side byColor:(UIColor *)color isDash:(BOOL)isDash {
     UIBezierPath *path = [UIBezierPath bezierPath];
     switch (side) {
         case UIViewSideTop:
@@ -77,8 +77,8 @@
     
     // 创建图层
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    shapeLayer.strokeColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.00].CGColor;
-    shapeLayer.fillColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.00].CGColor;
+    shapeLayer.strokeColor = color.CGColor;
+    shapeLayer.fillColor = color.CGColor;
     //  设置线宽，线间距
     if (isDash) {
         [shapeLayer setLineDashPattern:[NSArray arrayWithObjects:[NSNumber numberWithInt:5], [NSNumber numberWithInt:1], nil]];
@@ -91,6 +91,5 @@
     
     return shapeLayer;
 }
-
 
 @end

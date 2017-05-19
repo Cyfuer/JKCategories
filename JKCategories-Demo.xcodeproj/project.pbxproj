@@ -1017,6 +1017,9 @@
 		C7A8107E1BBA876B00865FFB /* NSObject+JKAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JKAppInfo.h"; sourceTree = "<group>"; };
 		EFC5D7CD1ECBEC5900725970 /* UIView+Sideline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Sideline.h"; sourceTree = "<group>"; };
 		EFC5D7CE1ECBEC5900725970 /* UIView+Sideline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Sideline.m"; sourceTree = "<group>"; };
+		EFC5D7D81ECC17AB00725970 /* NSString-tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString-tools.h"; sourceTree = "<group>"; };
+		EFC5D8031ECEF11900725970 /* Macro+debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Macro+debug.h"; sourceTree = "<group>"; };
+		EFC5D8041ECEF11900725970 /* Macro+define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Macro+define.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1403,6 +1406,8 @@
 		A22725C51A3E72D50061605B = {
 			isa = PBXGroup;
 			children = (
+				EFC5D8021ECEF05800725970 /* DFMacro */,
+				EFC5D7D01ECC141A00725970 /* DFTools */,
 				A22725D01A3E72D50061605B /* JKCategories */,
 				A202D9D01B103F9400EAB199 /* JKCategories-Demo */,
 				A281FB4C1AC80F61009040DA /* Demos */,
@@ -2906,6 +2911,23 @@
 			path = UIAlertView;
 			sourceTree = "<group>";
 		};
+		EFC5D7D01ECC141A00725970 /* DFTools */ = {
+			isa = PBXGroup;
+			children = (
+				EFC5D7D81ECC17AB00725970 /* NSString-tools.h */,
+			);
+			path = DFTools;
+			sourceTree = "<group>";
+		};
+		EFC5D8021ECEF05800725970 /* DFMacro */ = {
+			isa = PBXGroup;
+			children = (
+				EFC5D8031ECEF11900725970 /* Macro+debug.h */,
+				EFC5D8041ECEF11900725970 /* Macro+define.h */,
+			);
+			path = DFMacro;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2933,7 +2955,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0700;
-				ORGANIZATIONNAME = www.skyfox.org;
+				ORGANIZATIONNAME = Cyfuer;
 				TargetAttributes = {
 					A22725CD1A3E72D50061605B = {
 						CreatedOnToolsVersion = 6.1;

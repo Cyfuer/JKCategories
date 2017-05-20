@@ -26,7 +26,7 @@ BOOL isEmpty_str(NSString *string) {
 }
 
 /**
- *  带默认字符串判空显示
+ *  空字符串处理，如果字符串为空显示默认字符串
  *
  *  @param displayStr 要显示的字符串
  *  @param defaultStr 默认的字符串
@@ -43,7 +43,7 @@ NSString *deal_emptystr_withDefaultStr(NSString *displayStr, NSString *defaultSt
 }
 
 /**
- *  带空字符串判空显示
+ *  空字符串处理，如果字符串为空，显示空字符串
  *
  *  @param displayStr 要显示的字符串
  *

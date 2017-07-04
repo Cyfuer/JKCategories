@@ -1015,6 +1015,7 @@
 		BCB9547C1B0D829800E6BA78 /* NSData+JKDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JKDataCache.m"; sourceTree = "<group>"; };
 		C7A8107D1BBA876B00865FFB /* NSObject+JKAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JKAppInfo.m"; sourceTree = "<group>"; };
 		C7A8107E1BBA876B00865FFB /* NSObject+JKAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JKAppInfo.h"; sourceTree = "<group>"; };
+		EF015C0A1EE13A40007F346D /* NSInteger-tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSInteger-tools.h"; sourceTree = "<group>"; };
 		EFC5D7CD1ECBEC5900725970 /* UIView+Sideline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Sideline.h"; sourceTree = "<group>"; };
 		EFC5D7CE1ECBEC5900725970 /* UIView+Sideline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Sideline.m"; sourceTree = "<group>"; };
 		EFC5D7D81ECC17AB00725970 /* NSString-tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString-tools.h"; sourceTree = "<group>"; };
@@ -2915,6 +2916,7 @@
 			isa = PBXGroup;
 			children = (
 				EFC5D7D81ECC17AB00725970 /* NSString-tools.h */,
+				EF015C0A1EE13A40007F346D /* NSInteger-tools.h */,
 			);
 			path = DFTools;
 			sourceTree = "<group>";

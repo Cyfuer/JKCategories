@@ -19,7 +19,7 @@
 /**
  *  @author Denys Telezhkin
  *
- *  @brief  CATransaction 动画执 block回调
+ *  @brief  CATransaction 动画执行 block 回调
  *
  *  @param duration   动画时间
  *  @param animations 动画块
@@ -27,7 +27,7 @@
  */
 +(void)jk_animateWithDuration:(NSTimeInterval)duration
                    animations:(nullable void (^)(void))animations
-                   completion:(nullable void (^)())completion;
+                   completion:(nullable void (^)(void))completion;
 
 @end
 

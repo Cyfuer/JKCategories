@@ -21,11 +21,12 @@ _format.mSampleRate = 8000.0f;
 */
 
 @interface NSData (JKPCM)
+//self   raw audio data
+
 /**
  *  format wav data
  *
- *  @param self   raw audio data
- *  @param pcmFormat format of pcm
+ *  @param PCMFormat format of pcm
  *
  *  @return wav data
  */

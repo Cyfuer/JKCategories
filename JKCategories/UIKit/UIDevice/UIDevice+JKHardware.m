@@ -4,7 +4,10 @@
 //
 //  Created by Inder Kumar Rathore on 19/01/13.
 //  Copyright (c) 2013 Rathore. All rights reserved.
+//
 //  https://github.com/fahrulazmi/UIDeviceHardware/blob/master/UIDeviceHardware.m
+//
+//  Reference: <https://www.theiphonewiki.com/wiki/Models>
 
 #import "UIDevice+JKHardware.h"
 #include <sys/types.h>
@@ -55,13 +58,33 @@
     if ([platform isEqualToString:@"iPhone9,2"])    return @"iPhone 7 Plus";
     if ([platform isEqualToString:@"iPhone9,3"])    return @"iPhone 7";
     if ([platform isEqualToString:@"iPhone9,4"])    return @"iPhone 7 Plus";
-    
+    if ([platform isEqualToString:@"iPhone10,1"])   return @"iPhone 8";
+    if ([platform isEqualToString:@"iPhone10,4"])   return @"iPhone 8";
+    if ([platform isEqualToString:@"iPhone10,2"])   return @"iPhone 8 Plus";
+    if ([platform isEqualToString:@"iPhone10,5"])   return @"iPhone 8 Plus";
+    if ([platform isEqualToString:@"iPhone10,3"])   return @"iPhone X";
+    if ([platform isEqualToString:@"iPhone10,6"])   return @"iPhone X";
+    if ([platform isEqualToString:@"iPhone11,2"])   return @"iPhone XS";
+    if ([platform isEqualToString:@"iPhone11,4"])   return @"iPhone XS Max";
+    if ([platform isEqualToString:@"iPhone11,6"])   return @"iPhone XS Max CN";
+    if ([platform isEqualToString:@"iPhone11,8"])   return @"iPhone XR";
+    if ([platform isEqualToString:@"iPhone12,1"])   return @"iPhone 11";
+    if ([platform isEqualToString:@"iPhone12,3"])   return @"iPhone 11 Pro";
+    if ([platform isEqualToString:@"iPhone12,5"])   return @"iPhone 11 Pro Max";
+    if ([platform isEqualToString:@"iPhone12,8"])   return @"iPhone SE 2";
+    if ([platform isEqualToString:@"iPhone13,1"])   return  @"iPhone 12 Mini";
+    if ([platform isEqualToString:@"iPhone13,2"])   return  @"iPhone 12";
+    if ([platform isEqualToString:@"iPhone13,3"])   return  @"iPhone 12 Pro";
+    if ([platform isEqualToString:@"iPhone13,4"])   return  @"iPhone 12 Pro Max";
+
     if ([platform isEqualToString:@"iPod1,1"])      return @"iPod Touch 1G";
     if ([platform isEqualToString:@"iPod2,1"])      return @"iPod Touch 2G";
     if ([platform isEqualToString:@"iPod3,1"])      return @"iPod Touch 3G";
     if ([platform isEqualToString:@"iPod4,1"])      return @"iPod Touch 4G";
     if ([platform isEqualToString:@"iPod5,1"])      return @"iPod Touch 5G";
     if ([platform isEqualToString:@"iPod7,1"])      return @"iPod Touch 6G";
+    if ([platform isEqualToString:@"iPod9,1"])      return @"iPod Touch 7G";
+    
     
     if ([platform isEqualToString:@"iPad1,1"])      return @"iPad";
     if ([platform isEqualToString:@"iPad2,1"])      return @"iPad 2 (WiFi)";
@@ -93,7 +116,47 @@
     if ([platform isEqualToString:@"iPad6,4"])      return @"iPad Pro 9.7-inch (Cellular)";
     if ([platform isEqualToString:@"iPad6,7"])      return @"iPad Pro 12.9-inch (WiFi)";
     if ([platform isEqualToString:@"iPad6,8"])      return @"iPad Pro 12.9-inch (Cellular)";
+    if ([platform isEqualToString:@"iPad6,11"])     return @"iPad 5 (WiFi)";
+    if ([platform isEqualToString:@"iPad6,12"])     return @"iPad 5 (Cellular)";
+    if ([platform isEqualToString:@"iPad7,1"])      return @"iPad Pro 12.9-inch (WiFi)";
+    if ([platform isEqualToString:@"iPad7,2"])      return @"iPad Pro 12.9-inch (Cellular)";
+    if ([platform isEqualToString:@"iPad7,3"])      return @"iPad Pro 10.5-inch (WiFi)";
+    if ([platform isEqualToString:@"iPad7,4"])      return @"iPad Pro 10.5-inch (Cellular)";
+    if ([platform isEqualToString:@"iPad7,5"])      return @"iPad 6 (WiFi)";
+    if ([platform isEqualToString:@"iPad7,6"])      return @"iPad 6 (Cellular)";
+    if ([platform isEqualToString:@"iPad7,11"])     return @"iPad 7 (WiFi)";
+    if ([platform isEqualToString:@"iPad7,12"])     return @"iPad 7 (Cellular)";
+    if ([platform isEqualToString:@"iPad8,1"])      return @"iPad Pro 11-inch (WiFi)";
+    if ([platform isEqualToString:@"iPad8,2"])      return @"iPad Pro 11-inch (WiFi, 1TB)";
+    if ([platform isEqualToString:@"iPad8,3"])      return @"iPad Pro 11-inch (Cellular)";
+    if ([platform isEqualToString:@"iPad8,4"])      return @"iPad Pro 11-inch (Cellular, 1TB)";
+    if ([platform isEqualToString:@"iPad8,5"])      return @"iPad Pro 12.9-inch 3 (WiFi)";
+    if ([platform isEqualToString:@"iPad8,6"])      return @"iPad Pro 12.9-inch 3 (WiFi, 1TB)";
+    if ([platform isEqualToString:@"iPad8,7"])      return @"iPad Pro 12.9-inch 3 (Cellular)";
+    if ([platform isEqualToString:@"iPad8,8"])      return @"iPad Pro 12.9-inch 3 (Cellular, 1TB)";
+    if ([platform isEqualToString:@"iPad8,9"])      return @"iPad Pro 11-inch 2 (WiFi)";
+    if ([platform isEqualToString:@"iPad8,10"])     return @"iPad Pro 11-inch 2 (Cellular)";
+    if ([platform isEqualToString:@"iPad8,11"])     return @"iPad Pro 12.9-inch 4 (WiFi)";
+    if ([platform isEqualToString:@"iPad8,12"])     return @"iPad Pro 12.9-inch 4 (Cellular)";
+    if ([platform isEqualToString:@"iPad11,1"])     return @"iPad Mini 5 (WiFi)";
+    if ([platform isEqualToString:@"iPad11,2"])     return @"iPad Mini 5 (Cellular)";
+    if ([platform isEqualToString:@"iPad11,3"])     return @"iPad Air 3 (WiFi)";
+    if ([platform isEqualToString:@"iPad11,4"])     return @"iPad Air 3 (Cellular)";
+    if ([platform isEqualToString:@"iPad11,6"])     return @"iPad 8 (WiFi)";
+    if ([platform isEqualToString:@"iPad11,7"])     return @"iPad 8 (Cellular)";
+    if ([platform isEqualToString:@"iPad13,1"])     return @"iPad Air 4 (WiFi)";
+    if ([platform isEqualToString:@"iPad13,2"])     return @"iPad Air 4 (Cellular)";
+
     
+    if ([platform isEqualToString:@"AirPods1,1"])      return @"AirPods";
+    if ([platform isEqualToString:@"AirPods2,1"])      return @"AirPods 2";
+    if ([platform isEqualToString:@"AirPods8,1"])      return @"AirPods Pro";
+
+    
+    if ([platform isEqualToString:@"AudioAccessory1,1"])      return @"HomePod";
+    if ([platform isEqualToString:@"AudioAccessory1,2"])      return @"HomePod";
+    if ([platform isEqualToString:@"AudioAccessory5,1"])      return @"HomePod mini";
+
     if ([platform isEqualToString:@"i386"])         return [UIDevice currentDevice].model;
     if ([platform isEqualToString:@"x86_64"])       return [UIDevice currentDevice].model;
     

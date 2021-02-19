@@ -109,13 +109,7 @@ _Pragma("clang diagnostic pop") \
 }
 
 #pragma mark - String Properties
-- (NSString *) jk_stringWithFormat: (NSString *) format
-{
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    //    formatter.locale = [NSLocale currentLocale]; // Necessary?
-    formatter.dateFormat = format;
-    return [formatter stringFromDate:self];
-}
+ 
 
 - (NSString *) jk_stringWithDateStyle: (NSDateFormatterStyle) dateStyle timeStyle: (NSDateFormatterStyle) timeStyle
 {
@@ -204,7 +198,7 @@ _Pragma("clang diagnostic pop") \
     NSDateComponents *components2 = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:aDate];
 
     // Must be same week. 12/31 and 1/1 will both be week "1" if they are in the same week
-    if (components1.week != components2.week) return NO;
+    if (components1.weekOfYear != components2.weekOfYear) return NO;
     
     // Must have a time interval under 1 week. Thanks @aclark
     return (fabs([self timeIntervalSinceDate:aDate]) < JK_D_WEEK);
@@ -601,57 +595,5 @@ _Pragma("clang diagnostic pop") \
 #endif
     return components.hour;
 }
-- (NSInteger) jk_hour
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.hour;
-}
-
-- (NSInteger) jk_minute
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.minute;
-}
-
-- (NSInteger) jk_seconds
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.second;
-}
-
-- (NSInteger) jk_day
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.day;
-}
-
-- (NSInteger) jk_month
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.month;
-}
-
-- (NSInteger) jk_week
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.weekOfMonth;
-}
-
-- (NSInteger) jk_weekday
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.weekday;
-}
-
-- (NSInteger) jk_nthWeekday // e.g. 2nd Tuesday of the month is 2
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.weekdayOrdinal;
-}
-
-- (NSInteger) jk_year
-{
-    NSDateComponents *components = [[NSDate jk_currentCalendar] components:JK_NSDATE_UTILITIES_COMPONENT_FLAGS fromDate:self];
-    return components.year;
-}
+ 
 @end

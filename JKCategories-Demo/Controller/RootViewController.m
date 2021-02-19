@@ -7,9 +7,9 @@
 //
 
 #import "RootViewController.h"
-#import "JKCategories.h"
+#import <JKCategories/JKCategories.h>
 
-#import "NSData+JKGzip.h"
+
 @interface RootViewController ()
 
 @end
@@ -38,12 +38,10 @@
                        @"UITextView",
                        @"UIView",
                        @"UIViewController",
-                       @"UIWebView",
                        @"UIWindow",
                        @"MKMapView",
                        @"UITableView",
                        @"UINavigationBar",
-                       @"UIAlertView",
                        @"UINavigationItem",
                        @"UIScreen",
                        @"UIControl",

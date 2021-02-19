@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, JKShakeDirection) {
  * @param delta The width of the shake
  * @param handler A block object to be executed when the shake sequence ends
  */
-- (void)jk_shake:(int)times withDelta:(CGFloat)delta completion:(void((^)()))handler;
+- (void)jk_shake:(int)times withDelta:(CGFloat)delta completion:(void((^)(void)))handler;
 
 /** Shake the UIView at a custom speed
  *
@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, JKShakeDirection) {
  * @param interval The duration of one shake
  * @param handler A block object to be executed when the shake sequence ends
  */
-- (void)jk_shake:(int)times withDelta:(CGFloat)delta speed:(NSTimeInterval)interval completion:(void((^)()))handler;
+- (void)jk_shake:(int)times withDelta:(CGFloat)delta speed:(NSTimeInterval)interval completion:(void((^)(void)))handler;
 
 /** Shake the UIView at a custom speed
  *
@@ -72,7 +72,7 @@ typedef NS_ENUM(NSInteger, JKShakeDirection) {
  * @param times The number of shakes
  * @param delta The width of the shake
  * @param interval The duration of one shake
- * @param direction of the shake
+ * @param shakeDirection    direction of the shake
  */
 - (void)jk_shake:(int)times withDelta:(CGFloat)delta speed:(NSTimeInterval)interval shakeDirection:(JKShakeDirection)shakeDirection;
 
@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, JKShakeDirection) {
  * @param times The number of shakes
  * @param delta The width of the shake
  * @param interval The duration of one shake
- * @param direction of the shake
+ * @param shakeDirection    direction of the shake
  * @param completion to be called when the view is done shaking
  */
 - (void)jk_shake:(int)times withDelta:(CGFloat)delta speed:(NSTimeInterval)interval shakeDirection:(JKShakeDirection)shakeDirection completion:(void(^)(void))completion;
